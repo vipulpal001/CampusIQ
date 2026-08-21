@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify Email - CampusIQ</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <h1>CampusIQ</h1>
+
+            <p>Verify your email address</p>
+
+            <p>
+                We have sent a 6-digit OTP to your email.
+            </p>
+
+            <!-- Success Message -->
+            <p th:if="${success}"
+               th:text="${success}">
+            </p>
+
+            <!-- Error Message -->
+            <p th:if="${error}"
+               th:text="${error}">
+            </p>
+
+            <form action="/verify-otp" method="post">
+
+                <!-- CSRF Token -->
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}">
+
+                <!-- Email -->
+                <label for="email">Email</label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    th:value="${email}"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+                <!-- OTP -->
+                <label for="otp">Verification OTP</label>
+
+                <input
+                    type="text"
+                    id="otp"
+                    name="otp"
+                    placeholder="Enter 6-digit OTP"
+                    maxlength="6"
+                    inputmode="numeric"
+                    pattern="[0-9]{6}"
+                    autocomplete="one-time-code"
+                    required
+                >
+
+                <button type="submit">
+                    Verify Email
+                </button>
+
+            </form>
+
+            <p>
+                Already verified?
+                <a href="/login">Login</a>
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="/script.js" defer></script>
+
+</body>
+
+</html>

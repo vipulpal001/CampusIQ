@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusIQ - Student Management System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/Img%20Assist/ChatGPT-Image-Aug-1_-2026_-10_12_46-AM.ico">
+
+    <!-- Google Model Viewer -->
+    <script type="module"
+        src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+    </script>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+
+        <!-- Brand -->
+        <div class="brand">
+
+                <img src="/Img%20Assist/Pagelogo.png"
+                alt="CampusIQ Logo"
+                class="logo">
+
+            <div class="line"></div>
+
+            <div class="brand-text">
+                <h1>CampusIQ</h1>
+                <p>Student Management System</p>
+            </div>
+
+        </div>
+
+        <!-- Navigation -->
+        <nav>
+            <a href="/">Home</a>
+            <a href="#features">Students</a>
+            <a href="#features">Courses</a>
+            <a href="#about">About</a>
+        </nav>
+
+        <!-- Login -->
+        <a href="/login" class="login-btn">
+            Login
+        </a>
+
+    </header>
+
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero">
+
+        <div class="hero-text">
+
+            <h1>Manage Your Students Smarter</h1>
+
+            <p>
+                Track attendance, manage courses, monitor performance,
+                <br>
+                and simplify administration from one dashboard.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/login" class="Get-section">
+                    Get Started
+                </a>
+
+                <a href="#features" class="Get-section">
+                    Learn More
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- 3D Model -->
+        <div class="hero-image">
+
+            <model-viewer
+                src="/Models/WalkStudent.glb"
+                camera-controls
+                rotation-per-second="10deg"
+                shadow-intensity="1"
+                alt="Student 3D Model">
+            </model-viewer>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FEATURES SECTION ================= -->
+    <section class="Features" id="features">
+
+        <!-- Attendance -->
+        <div class="feature">
+
+            <img
+                src="/Img%20Assist/attendance.png"
+                alt="Attendance Tracking"
+                class="feature-icon"
+                width="100"
+                height="100">
+
+            <h2>Attendance Tracking</h2>
+
+            <p>
+                Monitor student attendance with ease and accuracy.
+            </p>
+
+        </div>
+
+
+        <!-- Courses -->
+        <div class="feature">
+
+            <img
+                src="/Img%20Assist/course.png"
+                alt="Course Management"
+                class="feature-icon"
+                width="100"
+                height="100">
+
+            <h2>Course Management</h2>
+
+            <p>
+                Organize and manage courses efficiently.
+            </p>
+
+        </div>
+
+
+        <!-- Performance -->
+        <div class="feature">
+
+            <img
+                src="/Img%20Assist/performance.png"
+                alt="Performance Monitoring"
+                class="feature-icon"
+                width="100"
+                height="100">
+
+            <h2>Performance Monitoring</h2>
+
+            <p>
+                Track student performance and progress over time.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= TABLE CARD ================= -->
+    <section class="table-card">
+
+        <h2>CampusIQ Dashboard</h2>
+
+        <p>
+            Manage your students, courses, attendance and performance
+            from one centralized platform.
+        </p>
+
+    </section>
+
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="about">
+
+        <h2>About CampusIQ</h2>
+
+        <p>
+            CampusIQ is a student management system designed to make
+            academic administration simple, organized and efficient.
+        </p>
+
+    </section>
+
+    <script src="/script.js" defer></script>
+
+
+</body>
+
+</html>

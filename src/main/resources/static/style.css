@@ -1,0 +1,977 @@
+/* ==========================================
+   RESET DEFAULT BROWSER STYLES
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ==========================================
+   BODY
+========================================== */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fc;
+    color: #0f172a;
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 120px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 5%;
+
+    background: #ffffff;
+    border-top: 8px solid #2563eb;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+    z-index: 1000;
+}
+
+
+/* ==========================================
+   BRAND SECTION
+========================================== */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+
+/* Logo */
+
+.logo {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+}
+
+
+/* Vertical Divider */
+
+.line {
+    width: 2px;
+    height: 60px;
+
+    background: #ddd;
+
+    margin: 0 10px;
+}
+
+
+/* Website Name */
+
+.brand-text h1 {
+    margin: 0;
+
+    font-size: 38px;
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+
+/* Website Subtitle */
+
+.brand-text p {
+    margin-top: 4px;
+
+    color: #666;
+    font-size: 17px;
+}
+
+
+/* ==========================================
+   NAVIGATION MENU
+========================================== */
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+nav a {
+    position: relative;
+
+    text-decoration: none;
+
+    color: #222;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    transition: color 0.3s ease;
+}
+
+
+/* Navigation Hover */
+
+nav a:hover,
+nav a.active {
+    color: #2563eb;
+}
+
+
+/* Blue Line Under Active Link */
+
+nav a.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -10px;
+
+    width: 100%;
+    height: 3px;
+
+    background: #2563eb;
+
+    border-radius: 5px;
+}
+
+
+/* ==========================================
+   LOGIN BUTTON
+========================================== */
+
+.login-btn {
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border: none;
+
+    padding: 14px 28px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    transition: background 0.3s ease,
+                transform 0.2s ease;
+}
+
+
+/* Login Hover */
+
+.login-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   HERO SECTION
+========================================== */
+
+.hero {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+
+    min-height: calc(100vh - 120px);
+
+    margin-top: 120px;
+
+    padding: 40px 8%;
+
+    background-image:
+        linear-gradient(
+            rgba(248, 251, 255, 0.75),
+            rgba(248, 251, 255, 0.75)
+        ),
+        url("/Img%20Assist/herobg.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/* ==========================================
+   HERO TEXT
+========================================== */
+
+.hero-text {
+    width: 50%;
+}
+
+
+/* Main Heading */
+
+.hero-text h1 {
+    font-size: 3.5rem;
+
+    line-height: 1.15;
+
+    color: #0f172a;
+
+    margin-bottom: 20px;
+}
+
+
+/* Paragraph */
+
+.hero-text p {
+    font-size: 1.2rem;
+
+    color: #64748b;
+
+    line-height: 1.8;
+
+    margin-bottom: 30px;
+}
+
+
+/* ==========================================
+   HERO BUTTONS
+========================================== */
+
+.Get-section {
+    background: #2563eb;
+
+    color: #ffffff;
+
+    border: none;
+
+    padding: 14px 28px;
+
+    margin-right: 10px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    transition: background 0.3s ease,
+                transform 0.2s ease;
+}
+
+
+/* Button Hover */
+
+.Get-section:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-2px);
+}
+
+
+/* ==========================================
+   COMMON BUTTON / LINK STYLE
+========================================== */
+
+.btn {
+    display: inline-block;
+
+    text-decoration: none;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    padding: 15px 35px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+
+/* ==========================================
+   HERO 3D MODEL
+========================================== */
+
+.hero-image {
+    width: 50%;
+
+    display: flex;
+
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+/* Model Viewer */
+
+.hero-image model-viewer {
+    width: 650px;
+    height: 650px;
+
+    max-width: 100%;
+}
+
+
+/* ==========================================
+   FEATURES SECTION
+========================================== */
+
+.Features {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding: 80px 8%;
+
+    background-image:
+        linear-gradient(
+            rgba(248, 251, 255, 0.75),
+            rgba(248, 251, 255, 0.75)
+        ),
+        url("Img Assist/features.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/* ==========================================
+   FEATURE CARD
+========================================== */
+
+.feature {
+    flex: 1;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    padding: 35px 25px;
+
+    border-radius: 20px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+
+/* Feature Hover */
+
+.feature:hover {
+    transform: translateY(-8px);
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Feature Icon */
+
+.feature-icon {
+    width: 100px;
+    height: 100px;
+
+    object-fit: contain;
+
+    margin-bottom: 20px;
+}
+
+
+/* Feature Heading */
+
+.feature h2 {
+    margin-bottom: 12px;
+
+    font-size: 24px;
+
+    color: #0f172a;
+}
+
+
+/* Feature Description */
+
+.feature p {
+    color: #64748b;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+}
+
+
+/* ==========================================
+   CLIENT TABLE CARD
+========================================== */
+
+.table-card {
+    width: 95%;
+
+    margin: 40px auto;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==========================================
+   TABLE HEADER
+========================================== */
+
+.table-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 25px 35px;
+
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #3b82f6
+    );
+
+    color: #ffffff;
+}
+
+
+/* Table Title */
+
+.table-header h2 {
+    font-size: 28px;
+}
+
+
+/* Search Input */
+
+.table-header input {
+    width: 260px;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 30px;
+
+    outline: none;
+
+    font-size: 15px;
+
+    background: #ffffff;
+
+    transition: box-shadow 0.3s ease;
+}
+
+
+/* Search Focus */
+
+.table-header input:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+
+/* ==========================================
+   CLIENT TABLE
+========================================== */
+
+.client-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+/* Table Heading */
+
+.client-table th {
+    background: #eff6ff;
+
+    color: #1e3a8a;
+
+    padding: 18px;
+
+    font-size: 15px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    text-align: left;
+}
+
+
+/* Table Data */
+
+.client-table td {
+    padding: 18px;
+
+    color: #444;
+
+    border-bottom: 1px solid #edf2f7;
+}
+
+
+/* Table Row */
+
+.client-table tbody tr {
+    transition: background 0.3s ease,
+                transform 0.2s ease;
+}
+
+
+/* Table Hover */
+
+.client-table tbody tr:hover {
+    background: #eef5ff;
+
+    transform: scale(1.005);
+}
+
+
+/* Alternate Rows */
+
+.client-table tbody tr:nth-child(even) {
+    background: #fafcff;
+}
+
+
+/* Last Column */
+
+.client-table td:last-child {
+    font-weight: bold;
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN - TABLET
+========================================== */
+
+@media (max-width: 1100px) {
+
+    header {
+        padding: 0 3%;
+    }
+
+    nav {
+        gap: 20px;
+    }
+
+    .hero {
+        padding: 50px 5%;
+    }
+
+    .hero-text h1 {
+        font-size: 2.8rem;
+    }
+
+    .hero-image model-viewer {
+        width: 500px;
+        height: 500px;
+    }
+
+    .Features {
+        padding: 60px 5%;
+    }
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN - MOBILE
+========================================== */
+
+@media (max-width: 768px) {
+
+    /* Header */
+
+    header {
+        position: relative;
+
+        height: auto;
+
+        min-height: 100px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 20px;
+
+        padding: 20px;
+    }
+
+
+    /* Brand */
+
+    .brand-text h1 {
+        font-size: 28px;
+    }
+
+    .brand-text p {
+        font-size: 13px;
+    }
+
+    .logo {
+        width: 55px;
+        height: 55px;
+    }
+
+    .line {
+        height: 45px;
+
+        margin: 0 5px;
+    }
+
+
+    /* Navigation */
+
+    nav {
+        order: 3;
+
+        width: 100%;
+
+        justify-content: center;
+
+        gap: 20px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+
+    /* Login */
+
+    .login-btn {
+        padding: 10px 18px;
+
+        font-size: 14px;
+    }
+
+
+    /* Hero */
+
+    .hero {
+        flex-direction: column;
+
+        text-align: center;
+
+        margin-top: 0;
+
+        padding: 60px 5%;
+    }
+
+    .hero-text {
+        width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 2.3rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+
+    /* 3D Model */
+
+    .hero-image {
+        width: 100%;
+
+        justify-content: center;
+
+        margin-top: 30px;
+    }
+
+    .hero-image model-viewer {
+        width: 350px;
+        height: 350px;
+    }
+
+
+    /* Features */
+
+    .Features {
+        flex-direction: column;
+
+        padding: 60px 5%;
+    }
+
+    .feature {
+        width: 100%;
+    }
+
+
+    /* Table */
+
+    .table-card {
+        width: 95%;
+
+        overflow-x: auto;
+    }
+
+    .table-header {
+        flex-direction: column;
+
+        gap: 15px;
+
+        align-items: stretch;
+
+        padding: 20px;
+    }
+
+    .table-header h2 {
+        font-size: 23px;
+    }
+
+    .table-header input {
+        width: 100%;
+    }
+
+    .client-table {
+        min-width: 700px;
+    }
+}
+
+
+/* ==========================================
+   VERY SMALL DEVICES
+========================================== */
+
+@media (max-width: 480px) {
+
+    .brand {
+        gap: 8px;
+    }
+
+    .brand-text h1 {
+        font-size: 23px;
+    }
+
+    .brand-text p {
+        font-size: 11px;
+    }
+
+    .logo {
+        width: 45px;
+        height: 45px;
+    }
+
+    .line {
+        height: 35px;
+    }
+
+    nav {
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 12px;
+    }
+
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .Get-section {
+        padding: 12px 20px;
+
+        font-size: 15px;
+    }
+
+    .hero-image model-viewer {
+        width: 280px;
+        height: 280px;
+    }
+
+    .feature {
+        padding: 25px 15px;
+    }
+
+    .feature h2 {
+        font-size: 20px;
+    }
+}
+/* ==========================================
+   LOGIN PAGE
+========================================== */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Login Card */
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+}
+
+/* Heading */
+
+.login-card h1 {
+    margin: 0 0 8px;
+    text-align: center;
+    color: #1e3a8a;
+    font-size: 32px;
+}
+
+.login-card > p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Form */
+
+.login-card form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-card label {
+    margin-bottom: 7px;
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.login-card input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    border: 1px solid #d5dbe5;
+    border-radius: 9px;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.2s ease;
+}
+
+.login-card input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+/* Login Button */
+
+.login-card button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 9px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.login-card button:hover {
+    background: #1d4ed8;
+}
+
+/* Register Link */
+
+.login-card a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-card a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================
+   SUCCESS / ERROR MESSAGES
+========================================== */
+
+.login-card .success-message {
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #e8f7ee;
+    color: #198754;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-card .error-message {
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #fdecec;
+    color: #dc3545;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 500px) {
+
+    .login-container {
+        padding: 20px;
+    }
+
+    .login-card {
+        padding: 30px 25px;
+    }
+
+    .login-card h1 {
+        font-size: 28px;
+    }
+}

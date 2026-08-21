@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - CampusIQ</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/Img%20Assist/favicon.ico">
+</head>
+
+<body>
+
+    <!-- ================= LOGIN CONTAINER ================= -->
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <!-- Heading -->
+            <h1>CampusIQ</h1>
+            <p>Login to your account</p>
+
+
+            <!-- ================= MESSAGES ================= -->
+
+            <!-- Success Message -->
+            <p
+                class="success-message"
+                th:if="${success}"
+                th:text="${success}">
+            </p>
+
+            <!-- Error Message -->
+            <p
+                class="error-message"
+                th:if="${error}"
+                th:text="${error}">
+            </p>
+
+            <!-- Login Error -->
+            <p
+                class="error-message"
+                th:if="${param.error}"
+                th:text="'Invalid username or password.'">
+            </p>
+
+            <!-- Logout Message -->
+            <p
+                class="success-message"
+                th:if="${param.logout}"
+                th:text="'You have been logged out successfully.'">
+            </p>
+
+
+            <!-- ================= LOGIN FORM ================= -->
+
+            <form action="/login" method="post">
+
+                <!-- CSRF Token -->
+                <input
+                    type="hidden"
+                    th:name="${_csrf.parameterName}"
+                    th:value="${_csrf.token}"
+                >
+
+
+                <!-- Username -->
+                <label for="username">Username</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required
+                >
+
+
+                <!-- Password -->
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+
+                <!-- Login Button -->
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+
+
+            <!-- ================= REGISTER LINK ================= -->
+
+            <p>
+                Don't have an account?
+                <a href="/register">Register</a>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- JavaScript -->
+    <script src="/script.js" defer></script>
+
+</body>
+
+</html>

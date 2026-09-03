@@ -7,20 +7,24 @@
 
     <title>CampusIQ - Student Management System</title>
 
+    <!-- Main CSS -->
     <link rel="stylesheet" href="/style.css">
 
+    <!-- Favicon -->
     <link rel="icon"
-        type="image/x-icon"
-        href="/Img%20Assist/ChatGPT-Image-Aug-1_-2026_-10_12_46-AM.ico">
+          type="image/x-icon"
+          href="/Img%20Assist/Chat%20GPT-Image-Aug-1_-2026_-10_12_46-AM.ico">
 
+    <!-- 3D Model Viewer -->
     <script type="module"
-        src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+            src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
     </script>
 </head>
 
 <body>
 
     <!-- ================= HEADER ================= -->
+
     <header>
 
         <div class="brand">
@@ -39,12 +43,14 @@
 
         </div>
 
+
         <nav>
-            <a href="/">Home</a>
-            <a href="#features">Students</a>
-            <a href="#features">Courses</a>
-            <a href="#about">About</a>
+            <a href="/" class="active">Home</a>
+            <a href="#students">Students</a>
+            <a href="#courses">Courses</a>
+            <a href="#features">About</a>
         </nav>
+
 
         <a href="/login" class="login-btn">
             Login
@@ -54,6 +60,7 @@
 
 
     <!-- ================= HERO ================= -->
+
     <section class="hero">
 
         <div class="hero-text">
@@ -79,7 +86,7 @@
                     Get Started
                 </a>
 
-                <a href="#features" class="Get-section secondary-btn">
+                <a href="#features" class="Get-section">
                     Explore Features
                 </a>
 
@@ -89,6 +96,7 @@
 
 
         <!-- 3D MODEL -->
+
         <div class="hero-image">
 
             <model-viewer
@@ -105,6 +113,7 @@
 
 
     <!-- ================= FEATURES ================= -->
+
     <section class="Features" id="features">
 
         <div class="feature">
@@ -112,9 +121,7 @@
             <img
                 src="/Img%20Assist/attendance.png"
                 alt="Attendance Tracking"
-                class="feature-icon"
-                width="100"
-                height="100">
+                class="feature-icon">
 
             <h2>Attendance Tracking</h2>
 
@@ -125,14 +132,12 @@
         </div>
 
 
-        <div class="feature">
+        <div class="feature" id="courses">
 
             <img
                 src="/Img%20Assist/course.png"
                 alt="Course Management"
-                class="feature-icon"
-                width="100"
-                height="100">
+                class="feature-icon">
 
             <h2>Course Management</h2>
 
@@ -148,9 +153,7 @@
             <img
                 src="/Img%20Assist/performance.png"
                 alt="Performance Monitoring"
-                class="feature-icon"
-                width="100"
-                height="100">
+                class="feature-icon">
 
             <h2>Performance Monitoring</h2>
 
@@ -163,310 +166,68 @@
     </section>
 
 
-    <!-- ================= DASHBOARD PREVIEW ================= -->
-    <section class="dashboard-section">
+    <!-- ================= STUDENT MANAGEMENT ================= -->
 
-        <div class="dashboard-heading">
+    <section id="students">
 
-            <div>
-                <span class="section-label">
-                    CAMPUSIQ OVERVIEW
-                </span>
+        <div class="table-card">
 
-                <h2>
-                    Everything You Need,
-                    <span>In One Place.</span>
-                </h2>
+            <div class="table-header">
 
-                <p>
-                    A centralized workspace for managing students,
-                    courses, attendance and academic performance.
-                </p>
-            </div>
+                <h2>Student Management</h2>
 
-            <a href="/login" class="dashboard-btn">
-                Open Dashboard →
-            </a>
-
-        </div>
-
-
-        <!-- DASHBOARD CARD -->
-        <div class="dashboard-card">
-
-            <!-- Dashboard Header -->
-            <div class="dashboard-top">
-
-                <div>
-                    <p class="dashboard-small-title">
-                        Overview
-                    </p>
-
-                    <h3>
-                        CampusIQ Dashboard
-                    </h3>
-                </div>
-
-                <div class="dashboard-status">
-                    <span></span>
-                    System Active
-                </div>
+                <input
+                    type="text"
+                    id="studentSearch"
+                    placeholder="Search students...">
 
             </div>
 
 
-            <!-- STAT CARDS -->
-            <div class="dashboard-stats">
-
-                <div class="stat-card">
-
-                    <div class="stat-icon student-icon">
-                        👨‍🎓
-                    </div>
-
-                    <div>
-                        <span>Total Students</span>
-                        <strong>—</strong>
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon course-icon">
-                        📚
-                    </div>
-
-                    <div>
-                        <span>Active Courses</span>
-                        <strong>—</strong>
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon attendance-icon">
-                        ✓
-                    </div>
-
-                    <div>
-                        <span>Attendance</span>
-                        <strong>—</strong>
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <div class="stat-icon performance-icon">
-                        ↗
-                    </div>
-
-                    <div>
-                        <span>Performance</span>
-                        <strong>—</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- DASHBOARD CONTENT -->
-            <div class="dashboard-content">
-
-                <!-- Activity -->
-                <div class="dashboard-panel">
-
-                    <div class="panel-header">
-
-                        <div>
-                            <span class="panel-label">
-                                RECENT ACTIVITY
-                            </span>
-
-                            <h3>
-                                Academic Overview
-                            </h3>
-                        </div>
-
-                        <span class="panel-dot"></span>
-
-                    </div>
-
-
-                    <div class="activity-list">
-
-                        <div class="activity-item">
-
-                            <div class="activity-icon">
-                                👨‍🎓
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Student Management
-                                </strong>
-
-                                <p>
-                                    Manage student records and profiles
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div class="activity-item">
-
-                            <div class="activity-icon">
-                                📖
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Course Management
-                                </strong>
-
-                                <p>
-                                    Organize courses and academic data
-                                </p>
-                            </div>
-
-                        </div>
-
-
-                        <div class="activity-item">
-
-                            <div class="activity-icon">
-                                📊
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Performance Tracking
-                                </strong>
-
-                                <p>
-                                    Monitor academic progress
-                                </p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Quick Actions -->
-                <div class="dashboard-panel quick-panel">
-
-                    <span class="panel-label">
-                        QUICK ACCESS
-                    </span>
-
-                    <h3>
-                        Get Started
-                    </h3>
-
-                    <p>
-                        Access CampusIQ features from one place.
-                    </p>
-
-
-                    <div class="quick-actions">
-
-                        <a href="/login" class="quick-action">
-                            <span>🔐</span>
-                            <div>
-                                <strong>Login</strong>
-                                <small>Access your account</small>
-                            </div>
-                        </a>
-
-
-                        <a href="#features" class="quick-action">
-                            <span>⚡</span>
-                            <div>
-                                <strong>Features</strong>
-                                <small>Explore CampusIQ</small>
-                            </div>
-                        </a>
-
-
-                        <a href="#about" class="quick-action">
-                            <span>ℹ</span>
-                            <div>
-                                <strong>About</strong>
-                                <small>Learn about the system</small>
-                            </div>
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
+            <table class="client-table">
+
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Attendance</th>
+                        <th>Performance</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Student Management</td>
+                        <td>Academic Records</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+
+                    <tr>
+                        <td>Course Management</td>
+                        <td>Course Data</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+
+                    <tr>
+                        <td>Performance Tracking</td>
+                        <td>Academic Progress</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
 
         </div>
 
     </section>
 
 
-    <!-- ================= ABOUT ================= -->
-    <section id="about" class="about">
-
-        <div class="about-content">
-
-            <span class="section-label">
-                ABOUT CAMPUSIQ
-            </span>
-
-            <h2>
-                Simplifying Academic
-                <span>Management.</span>
-            </h2>
-
-            <p>
-                CampusIQ is a student management system designed to make
-                academic administration simple, organized and efficient.
-                Manage students, courses, attendance and performance
-                from one centralized platform.
-            </p>
-
-            <a href="/login" class="about-btn">
-                Get Started →
-            </a>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= FOOTER ================= -->
-    <footer>
-
-        <div class="footer-brand">
-            <img
-                src="/Img%20Assist/Pagelogo.png"
-                alt="CampusIQ Logo">
-
-            <div>
-                <strong>CampusIQ</strong>
-                <span>Student Management System</span>
-            </div>
-        </div>
-
-        <p>
-            © 2026 CampusIQ. All rights reserved.
-        </p>
-
-    </footer>
-
+    <!-- ================= JAVASCRIPT ================= -->
 
     <script src="/script.js" defer></script>
 

@@ -30,6 +30,12 @@ public class EmailService {
                 "CampusIQ Team"
         );
 
-        mailSender.send(message);
+        try {
+            mailSender.send(message);
+            System.out.println(">>> [CAMPUSIQ] OTP email dispatched to: " + toEmail);
+        } catch (Exception e) {
+            System.err.println(">>> [CAMPUSIQ SMTP WARNING] Unable to send live email: " + e.getMessage());
+            System.out.println(">>> [CAMPUSIQ OTP CODE FOR " + toEmail + "]: " + otp);
+        }
     }
 }

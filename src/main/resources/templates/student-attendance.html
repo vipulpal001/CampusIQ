@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Attendance Report - ' + ${student.fullName} + ' - RKGIT ERP'">Student Attendance Report - RKGIT ERP</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1d68ed',
+                            hover: '#1557d0',
+                            dark: '#0a0f1d'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/Img%20Assist/favicon.ico">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen text-slate-800 antialiased flex flex-col">
+
+    <!-- Top Navbar -->
+    <header class="sticky top-0 z-40 bg-white border-b border-slate-200/90 shadow-sm h-16 flex items-center justify-between px-4 sm:px-6">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center p-1.5 shadow-sm">
+                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-extrabold tracking-tight text-slate-900">RKGIT</span>
+                <span class="text-[11px] font-bold text-red-700 bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    Admin Portal
+                </span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-red-600 text-white font-bold flex items-center justify-center text-xs shadow-sm ring-2 ring-red-100">
+                AD
+            </div>
+            <div class="text-left hidden sm:block">
+                <div class="text-xs font-bold text-slate-900">SYSTEM ADMINISTRATOR</div>
+                <div class="text-[10px] text-slate-500">Super User • RKGIT ERP</div>
+            </div>
+            <a th:href="@{/login?logout}" class="p-2 text-slate-400 hover:text-red-600 transition-colors ml-1" title="Logout">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Wrapper -->
+    <div class="flex flex-1 overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white border-r border-slate-200 p-4 flex flex-col justify-between shrink-0 hidden lg:flex">
+            <nav class="space-y-1 text-sm font-medium">
+                <a th:href="@{/admin/dashboard}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                    <span>System Dashboard</span>
+                </a>
+
+                <a th:href="@{/students}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-red-50 text-red-600 font-semibold border-r-4 border-red-600">
+                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <span>Manage Students</span>
+                </a>
+
+                <a th:href="@{/admin/faculty}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                    <span>Manage Faculty</span>
+                </a>
+
+                <a th:href="@{/admin/courses}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    <span>Subjects & Curricula</span>
+                </a>
+
+                <a th:href="@{/admin/timetable}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>Manage Time-Table</span>
+                </a>
+
+                <a th:href="@{/admin/question-papers}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <span>University Papers</span>
+                </a>
+
+                <a th:href="@{/attendance}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                    <span>Institutional Attendance</span>
+                </a>
+            </nav>
+
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+                <span class="font-bold text-slate-700">RKGIT ERP v2.4</span>
+                <p class="text-slate-500 mt-1">Status: All services online</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 lg:p-8 overflow-y-auto bg-slate-50">
+
+            <!-- Breadcrumb -->
+            <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-xs text-slate-500 mb-1">
+                        <a th:href="@{/admin/dashboard}" class="hover:text-red-600 transition-colors">Admin Dashboard</a>
+                        <span>/</span>
+                        <a th:href="@{/students}" class="hover:text-red-600 transition-colors">Students</a>
+                        <span>/</span>
+                        <span class="text-slate-800 font-medium">Attendance Report</span>
+                    </div>
+                    <h1 class="text-2xl font-bold tracking-tight text-slate-900">Student Attendance Analytics</h1>
+                    <p class="text-xs text-slate-500 mt-0.5">Individual lecture attendance history, eligibility breakdown, and session logs</p>
+                </div>
+                <div>
+                    <a th:href="@{/students}" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-xl shadow-xs transition-colors">
+                        &larr; Back to Students Directory
+                    </a>
+                </div>
+            </div>
+
+            <!-- Student Profile Summary Card -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-2xl bg-red-100 text-red-700 font-extrabold flex items-center justify-center text-xl shrink-0"
+                         th:text="${#strings.substring(student.fullName, 0, 1)}">A</div>
+                    <div>
+                        <div class="flex items-center gap-3">
+                            <h2 class="text-xl font-bold text-slate-900" th:text="${student.fullName}">Amit Kumar</h2>
+                            <span class="px-2.5 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-100 rounded-md font-bold text-xs"
+                                  th:text="${student.department.code}">CSE</span>
+                        </div>
+                        <div class="text-xs text-slate-500 mt-1 flex flex-wrap items-center gap-3">
+                            <span>Roll: <strong class="text-slate-800 font-mono" th:text="${student.rollNumber}">2024CSE001</strong></span>
+                            <span>•</span>
+                            <span>Semester <strong class="text-slate-800" th:text="${student.semester}">3</strong></span>
+                            <span>•</span>
+                            <span th:text="${student.email}">amit@campusiq.edu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a th:href="@{/attendance}" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition-colors">
+                        Attendance Workspace
+                    </a>
+                </div>
+            </div>
+
+            <!-- Eligibility Banner -->
+            <div th:if="${overallSummary.lowAttendance}" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl text-red-900 flex items-start gap-3">
+                <svg class="w-6 h-6 text-red-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <div>
+                    <h3 class="font-bold text-sm text-red-800">ATTENDANCE WARNING: Below 75% Minimum Requirement!</h3>
+                    <p class="text-xs text-red-700 mt-0.5">
+                        This student currently has <strong th:text="${overallSummary.formattedPercentage}"></strong> attendance and is at risk of being debarred from semester examinations.
+                    </p>
+                </div>
+            </div>
+
+            <div th:if="${!overallSummary.lowAttendance}" class="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-900 flex items-start gap-3">
+                <svg class="w-6 h-6 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <div>
+                    <h3 class="font-bold text-sm text-emerald-800">EXAM ELIGIBLE: Attendance Criteria Satisfied</h3>
+                    <p class="text-xs text-emerald-700 mt-0.5">
+                        Achieved <strong th:text="${overallSummary.formattedPercentage}"></strong> attendance, meeting the university examination threshold.
+                    </p>
+                </div>
+            </div>
+
+            <!-- KPI Metric Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                    <div class="text-xs font-semibold uppercase text-slate-400">Total Lectures Conducted</div>
+                    <div class="text-2xl font-bold text-slate-900 mt-1" th:text="${overallSummary.totalLectures}">0</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Scheduled academic sessions</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                    <div class="text-xs font-semibold uppercase text-slate-400">Lectures Attended</div>
+                    <div class="text-2xl font-bold text-emerald-600 mt-1" th:text="${overallSummary.attendedLectures}">0</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Present, Late, and Excused</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                    <div class="text-xs font-semibold uppercase text-slate-400">Overall Attendance Percentage</div>
+                    <div class="text-2xl font-bold mt-1"
+                         th:classappend="${overallSummary.lowAttendance ? 'text-red-600' : 'text-emerald-600'}"
+                         th:text="${overallSummary.formattedPercentage}">0%</div>
+                    <div class="text-[11px] text-slate-500 mt-1">75% mandatory threshold</div>
+                </div>
+            </div>
+
+            <!-- Subject-Wise Breakdown Table -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs mb-8 overflow-hidden">
+                <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-900">Subject-Wise Attendance Breakdown</h2>
+                        <p class="text-xs text-slate-500">Per-course class lecture attendance records</p>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-50 border-b border-slate-100 uppercase text-slate-500 font-semibold tracking-wider">
+                            <tr>
+                                <th class="py-3 px-4">Subject Code</th>
+                                <th class="py-3 px-4">Subject Name</th>
+                                <th class="py-3 px-4 text-center">Total Classes</th>
+                                <th class="py-3 px-4 text-center">Attended</th>
+                                <th class="py-3 px-4 text-center">Percentage</th>
+                                <th class="py-3 px-4 text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr th:if="${#lists.isEmpty(courseSummaries)}">
+                                <td colspan="6" class="py-8 text-center text-slate-500">
+                                    No courses found for this student's department.
+                                </td>
+                            </tr>
+                            <tr th:each="cs : ${courseSummaries}" class="hover:bg-slate-50/75 transition-colors">
+                                <td class="py-3 px-4 font-mono font-bold text-slate-900" th:text="${cs.course.courseCode}">CS101</td>
+                                <td class="py-3 px-4 font-semibold text-slate-800" th:text="${cs.course.name}">Data Structures</td>
+                                <td class="py-3 px-4 text-center text-slate-600" th:text="${cs.totalLectures}">10</td>
+                                <td class="py-3 px-4 text-center font-bold text-emerald-600" th:text="${cs.attendedLectures}">8</td>
+                                <td class="py-3 px-4 text-center">
+                                    <span class="font-bold text-xs"
+                                          th:classappend="${cs.lowAttendance ? 'text-red-600' : 'text-emerald-600'}"
+                                          th:text="${cs.formattedPercentage}">80%</span>
+                                </td>
+                                <td class="py-3 px-4 text-right">
+                                    <span th:if="${cs.lowAttendance}" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-50 text-red-700 border border-red-200">
+                                        Below 75%
+                                    </span>
+                                    <span th:unless="${cs.lowAttendance}" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        Eligible
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Detailed Activity Log -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+                <div class="p-5 border-b border-slate-100">
+                    <h2 class="text-base font-bold text-slate-900">Session Activity History</h2>
+                    <p class="text-xs text-slate-500">Chronological attendance logs taken by course faculty</p>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-50 border-b border-slate-100 uppercase text-slate-500 font-semibold tracking-wider">
+                            <tr>
+                                <th class="py-3 px-4">Date</th>
+                                <th class="py-3 px-4">Subject</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4">Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr th:if="${#lists.isEmpty(history)}">
+                                <td colspan="4" class="py-8 text-center text-slate-500">
+                                    No attendance records logged for this student yet.
+                                </td>
+                            </tr>
+                            <tr th:each="record : ${history}" class="hover:bg-slate-50/75 transition-colors">
+                                <td class="py-3 px-4 font-mono text-slate-700" th:text="${record.date}">2026-09-10</td>
+                                <td class="py-3 px-4 font-semibold text-slate-900" th:text="${record.course.courseCode} + ' - ' + ${record.course.name}">CS101</td>
+                                <td class="py-3 px-4">
+                                    <span th:if="${record.status == 'PRESENT'}" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        Present
+                                    </span>
+                                    <span th:if="${record.status == 'ABSENT'}" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-50 text-red-700 border border-red-200">
+                                        Absent
+                                    </span>
+                                    <span th:if="${record.status != 'PRESENT' and record.status != 'ABSENT'}" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200" th:text="${record.status}">
+                                        Late
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 text-slate-500" th:text="${record.remarks != null and !record.remarks.isEmpty() ? record.remarks : '-'}">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

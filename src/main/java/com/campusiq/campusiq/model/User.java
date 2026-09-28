@@ -29,6 +29,9 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @Column(name = "full_name")
+    private String fullName;
+
     // Email verification fields
     @Column(nullable = false)
     private boolean verified = false;
@@ -95,6 +98,15 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    // Full Name
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     // Verified

@@ -1,236 +1,935 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusIQ - Smart Student Management & Institutional ERP</title>
 
-    <title>CampusIQ - Student Management System</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1d68ed',
+                            hover: '#1557d0',
+                            dark: '#0a0f1d',
+                            navy: '#0d1527',
+                            card: '#131c31'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="/style.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
-    <link rel="icon"
-          type="image/x-icon"
-          href="/Img%20Assist/Chat%20GPT-Image-Aug-1_-2026_-10_12_46-AM.ico">
+    <link rel="icon" type="image/x-icon" href="/Img%20Assist/ChatGPT-Image-Aug-1_-2026_-10_12_46-AM.ico">
 
-    <!-- 3D Model Viewer -->
-    <script type="module"
-            src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
-    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .dark-glass-card {
+            background: rgba(13, 21, 39, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-mesh {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(29, 104, 237, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, rgba(219, 234, 254, 0.4) 0px, transparent 50%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #0f172a 0%, #1d68ed 60%, #4338ca 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .shimmer-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .shimmer-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px -10px rgba(29, 104, 237, 0.15);
+        }
+    </style>
 </head>
 
-<body>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- ================= HEADER ================= -->
+    <!-- ============================================================== -->
+    <!-- 1. STICKY GLASSMORPHIC NAVIGATION BAR                          -->
+    <!-- ============================================================== -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-xl border-b border-slate-200/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
-    <header>
+            <!-- Brand Logo & Institutional Tag -->
+            <a href="/" class="flex items-center gap-3.5 group">
+                <div class="w-11 h-11 rounded-2xl bg-blue-600/10 border border-blue-600/20 flex items-center justify-center p-2 shadow-sm group-hover:scale-105 transition-transform">
+                    <img src="/Img%20Assist/Pagelogo.png" 
+                         onerror="this.onerror=null; this.src='/Img Assist/Pagelogo.png';"
+                         alt="CampusIQ Logo" 
+                         class="w-full h-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl font-extrabold tracking-tight text-slate-900">CampusIQ</span>
+                        <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200 rounded-full">ERP 2.0</span>
+                    </div>
+                    <span class="text-xs text-slate-500 font-medium">RKGIT Student Management System</span>
+                </div>
+            </a>
 
-        <div class="brand">
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+                <a href="#hero" class="text-blue-600 hover:text-blue-700 transition-colors">Home</a>
+                <a href="#portals" class="hover:text-blue-600 transition-colors">Portals</a>
+                <a href="#features" class="hover:text-blue-600 transition-colors">Features</a>
+                <a href="#notices" class="hover:text-blue-600 transition-colors">Circulars</a>
+                <a href="#stats" class="hover:text-blue-600 transition-colors">Academics</a>
+                <a href="#faq" class="hover:text-blue-600 transition-colors">Help</a>
+            </nav>
 
-            <img
-                src="/Img%20Assist/Pagelogo.png"
-                alt="CampusIQ Logo"
-                class="logo">
+            <!-- Action Buttons: Register & Login -->
+            <div class="flex items-center gap-3">
+                <a th:href="@{/register}" 
+                   class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-slate-700 hover:text-blue-600 bg-slate-100/80 hover:bg-blue-50 rounded-xl border border-slate-200/80 transition-all">
+                    <span>New Account</span>
+                </a>
 
-            <div class="line"></div>
+                <a th:href="@{/login}" 
+                   class="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-700 active:scale-[0.98] rounded-xl shadow-[0_4px_16px_rgba(29,104,237,0.35)] transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    <span>Login</span>
+                </a>
 
-            <div class="brand-text">
-                <h1>CampusIQ</h1>
-                <p>Student Management System</p>
+                <!-- Mobile Menu Button -->
+                <button type="button" 
+                        onclick="toggleMobileMenu()"
+                        class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors focus:outline-none"
+                        aria-label="Toggle Navigation Menu">
+                    <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
             </div>
 
         </div>
 
-
-        <nav>
-            <a href="/" class="active">Home</a>
-            <a href="#students">Students</a>
-            <a href="#courses">Courses</a>
-            <a href="#features">About</a>
-        </nav>
-
-
-        <a href="/login" class="login-btn">
-            Login
-        </a>
-
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 bg-white/95 px-5 py-4 space-y-3">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-blue-600">Home</a>
+            <a href="#portals" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">Portals (Student/Faculty/Admin)</a>
+            <a href="#features" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">ERP Features</a>
+            <a href="#notices" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">Circulars & Notices</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 text-sm font-semibold text-slate-700 hover:text-blue-600">FAQ & Support</a>
+            <div class="pt-3 border-t border-slate-100 flex gap-2">
+                <a th:href="@{/register}" class="flex-1 text-center py-2.5 text-xs font-semibold rounded-lg bg-slate-100 text-slate-700">Register</a>
+                <a th:href="@{/login}" class="flex-1 text-center py-2.5 text-xs font-bold rounded-lg bg-blue-600 text-white">Login</a>
+            </div>
+        </div>
     </header>
 
 
-    <!-- ================= HERO ================= -->
+    <!-- ============================================================== -->
+    <!-- 2. HERO SECTION: ULTRA-MODERN SPLIT DESIGN                     -->
+    <!-- ============================================================== -->
+    <section id="hero" class="relative pt-32 pb-20 lg:pt-36 lg:pb-28 hero-mesh overflow-hidden">
 
-    <section class="hero">
+        <!-- Decorative background blurs -->
+        <div class="absolute top-20 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-40 right-10 w-96 h-96 bg-indigo-400/20 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="hero-text">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-            <span class="hero-badge">
-                Smart Campus Management
-            </span>
+                <!-- Left Column: High-Impact Typography & CTAs -->
+                <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
 
-            <h1>
-                Manage Your Students
-                <span>Smarter.</span>
-            </h1>
+                    <!-- Institutional Pill Badge -->
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200/80 shadow-sm text-xs font-semibold text-blue-700">
+                        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                        <span>Affiliated with AKTU • RKGIT Institutional ERP</span>
+                    </div>
 
-            <p>
-                Track attendance, manage courses, monitor performance,
-                and simplify academic administration from one centralized
-                platform.
-            </p>
+                    <!-- Main Hero Heading -->
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] text-slate-900">
+                        Manage Your <br class="hidden sm:inline">
+                        <span class="gradient-text">Students Smarter</span> <br>
+                        &amp; Digitally Unified.
+                    </h1>
 
-            <div class="hero-buttons">
+                    <!-- Paragraph Subtitle -->
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0 font-normal">
+                        A modern digital academic operating system tailored for students, faculty, and administrators. Track daily attendance, monitor sessional performance, manage course timetables, and broadcast notices in real time.
+                    </p>
 
-                <a href="/login" class="Get-section">
-                    Get Started
-                </a>
+                    <!-- Call-to-Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+                        <a th:href="@{/login}" 
+                           class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm tracking-wide shadow-[0_6px_24px_rgba(29,104,237,0.35)] hover:shadow-[0_8px_30px_rgba(29,104,237,0.5)] active:scale-[0.98] transition-all">
+                            <span>Launch ERP Portal</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
 
-                <a href="#features" class="Get-section">
-                    Explore Features
-                </a>
+                        <a th:href="@{/register}" 
+                           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm border border-slate-200/90 shadow-sm transition-all hover:border-slate-300">
+                            <span>Register with OTP</span>
+                            <span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded text-[10px] font-bold uppercase">Free</span>
+                        </a>
+
+                        <a href="#features" 
+                           class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-blue-600 px-3 py-2 transition-colors">
+                            <span>Explore Features</span> &darr;
+                        </a>
+                    </div>
+
+                    <!-- Trust Checklist / Quick Features -->
+                    <div class="pt-4 border-t border-slate-200/80 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-6 text-xs font-medium text-slate-500">
+                        <div class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span>Live Daily Attendance</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span>Sessional Marks Entry</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                            <span>AKTU Question Papers</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Interactive Glassmorphism Dashboard Preview Card -->
+                <div class="lg:col-span-6 relative">
+
+                    <!-- Ambient Glow Behind Card -->
+                    <div class="absolute -inset-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur-xl opacity-30 animate-pulse"></div>
+
+                    <!-- Main Preview Container Card -->
+                    <div class="relative bg-slate-900 rounded-3xl p-6 sm:p-7 text-white shadow-2xl border border-slate-700/60 overflow-hidden">
+                        
+                        <!-- Window Chrome / Control Header -->
+                        <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                                <span class="text-xs text-slate-400 font-mono ml-2">campusiq.rkgit.edu.in</span>
+                            </div>
+                            <span class="text-[11px] font-semibold uppercase px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">
+                                Live Session
+                            </span>
+                        </div>
+
+                        <!-- Active Student Profile Preview Header -->
+                        <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-800/80 border border-slate-700 mb-5">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                                    TA
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-white flex items-center gap-2">
+                                        <span>Tanmay Atray</span>
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                    </div>
+                                    <div class="text-xs text-slate-400">Roll: 2024CSE042 • B.Tech CSE (5th Sem)</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs font-semibold text-emerald-400">Good Standing</div>
+                                <div class="text-[10px] text-slate-400">AKTU Verified</div>
+                            </div>
+                        </div>
+
+                        <!-- Grid: Attendance Meter & Timetable Snapshot -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+
+                            <!-- Metric Card 1: Attendance Progress -->
+                            <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 relative overflow-hidden">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-semibold text-slate-300">Overall Attendance</span>
+                                    <span class="text-xs font-extrabold text-blue-400">88.5%</span>
+                                </div>
+                                <div class="w-full bg-slate-700/70 h-2.5 rounded-full overflow-hidden mb-2">
+                                    <div class="bg-gradient-to-r from-blue-500 to-indigo-500 h-full rounded-full w-[88.5%]"></div>
+                                </div>
+                                <div class="text-[11px] text-slate-400 flex justify-between">
+                                    <span>42 of 48 Lectures</span>
+                                    <span class="text-emerald-400">Safe (>75%)</span>
+                                </div>
+                            </div>
+
+                            <!-- Metric Card 2: Next Lecture -->
+                            <div class="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60">
+                                <div class="text-[11px] uppercase tracking-wider text-slate-400 font-semibold mb-1">Upcoming Lecture</div>
+                                <div class="text-xs font-bold text-white truncate">CS101 • Data Structures</div>
+                                <div class="text-[11px] text-blue-400 mt-1 flex items-center justify-between">
+                                    <span>Dr. Rajesh Sharma</span>
+                                    <span class="bg-blue-600/30 px-1.5 py-0.5 rounded text-[10px]">Room 301</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Floating Notification Mockups -->
+                        <div class="space-y-2.5">
+                            <!-- Floater 1 -->
+                            <div class="p-3 rounded-xl bg-slate-800/90 border border-slate-700 flex items-center justify-between text-xs">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                        ✓
+                                    </span>
+                                    <div>
+                                        <div class="font-semibold text-white">Attendance Marked Present</div>
+                                        <div class="text-[10px] text-slate-400">DBMS Lecture with Prof. Sunita Gupta</div>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-slate-400 font-mono">09:15 AM</span>
+                            </div>
+
+                            <!-- Floater 2 -->
+                            <div class="p-3 rounded-xl bg-slate-800/90 border border-slate-700 flex items-center justify-between text-xs">
+                                <div class="flex items-center gap-2.5">
+                                    <span class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
+                                        📊
+                                    </span>
+                                    <div>
+                                        <div class="font-semibold text-white">Sessional-I Results Released</div>
+                                        <div class="text-[10px] text-slate-400">Score: 27.0/30 (Top 5% in CSE)</div>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-emerald-400 font-bold">Grade A+</span>
+                            </div>
+                        </div>
+
+                        <!-- Card Quick Access Buttons -->
+                        <div class="mt-5 pt-4 border-t border-slate-800 flex items-center justify-between">
+                            <span class="text-xs text-slate-400">Instant One-Click Login</span>
+                            <a th:href="@{/login}" class="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                                <span>Access Live Portal</span> &rarr;
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- 3. LIVE STATS / IMPACT COUNTERS BAR                            -->
+    <!-- ============================================================== -->
+    <section id="stats" class="py-12 bg-white border-y border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
+
+                <!-- Stat 1: Students -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors">
+                    <div class="text-3xl sm:text-4xl font-black text-slate-900" th:text="${studentCount != null ? studentCount + '+' : '1,250+'}">
+                        1,250+
+                    </div>
+                    <div class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Students Enrolled</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Active Academic SIS Profiles</div>
+                </div>
+
+                <!-- Stat 2: Faculty -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors">
+                    <div class="text-3xl sm:text-4xl font-black text-blue-600" th:text="${facultyCount != null ? facultyCount + '+' : '48+'}">
+                        48+
+                    </div>
+                    <div class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Faculty &amp; HODs</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Professors &amp; Mentors</div>
+                </div>
+
+                <!-- Stat 3: Courses -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors">
+                    <div class="text-3xl sm:text-4xl font-black text-indigo-600" th:text="${courseCount != null ? courseCount + '+' : '32+'}">
+                        32+
+                    </div>
+                    <div class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">Curriculum Courses</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">B.Tech, MBA &amp; Diploma</div>
+                </div>
+
+                <!-- Stat 4: Uptime -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 transition-colors">
+                    <div class="text-3xl sm:text-4xl font-black text-emerald-600">
+                        99.9%
+                    </div>
+                    <div class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">System Uptime</div>
+                    <div class="text-[11px] text-slate-400 mt-0.5">Enterprise Cloud Reliable</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- 4. ROLE-BASED PORTALS SHOWCASE (Admin, Faculty, Student)        -->
+    <!-- ============================================================== -->
+    <section id="portals" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                    Role-Separated Governance
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
+                    Three Dedicated Portals, One Unified Platform
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+                    Designed specifically for each institutional role with strict access control, customizable privileges, and modern dashboards.
+                </p>
+            </div>
+
+            <!-- Portals Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Portal 1: Student Workspace -->
+                <div class="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm shimmer-card flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-28 h-28 bg-blue-500/10 rounded-bl-full pointer-events-none"></div>
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-6 shadow-inner">
+                            👨‍🎓
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Learner Desk</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">Student Portal</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6">
+                            Access real-time lecture attendance records, view sessional exam marks with performance statistics, check daily timetable schedules, and download university question papers.
+                        </p>
+                        <ul class="space-y-2.5 text-xs text-slate-600 mb-8">
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>Subject-wise Attendance &amp; 75% Cutoff Tracker</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>Sessional I, II &amp; Lab Marks Evaluation</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>AKTU Previous Year Question Papers</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a th:href="@{/login}" 
+                       class="w-full text-center py-3 rounded-xl bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs uppercase tracking-wider transition-colors duration-200">
+                        <span>Enter Student Portal</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Portal 2: Faculty Desk -->
+                <div class="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm shimmer-card flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-28 h-28 bg-indigo-500/10 rounded-bl-full pointer-events-none"></div>
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-6 shadow-inner">
+                            👨‍🏫
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">Academician Desk</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">Faculty Portal</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6">
+                            Mark daily lecture attendance with one tap, record and edit student sessional marks, view weekly teaching timetable, and publish instant notices for assigned student batches.
+                        </p>
+                        <ul class="space-y-2.5 text-xs text-slate-600 mb-8">
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>One-Click Class Attendance (Present/Absent)</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>Instant Sessional Marks Upload &amp; Feedback</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>Timetable Slot &amp; Classroom Room Schedule</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a th:href="@{/login}" 
+                       class="w-full text-center py-3 rounded-xl bg-indigo-50 hover:bg-indigo-600 text-indigo-700 hover:text-white font-bold text-xs uppercase tracking-wider transition-colors duration-200">
+                        <span>Enter Faculty Console</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Portal 3: Administrator Console -->
+                <div class="bg-white rounded-3xl p-8 border border-slate-200/90 shadow-sm shimmer-card flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-28 h-28 bg-red-500/10 rounded-bl-full pointer-events-none"></div>
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-2xl mb-6 shadow-inner">
+                            👑
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-red-600">Governance Desk</span>
+                        <h3 class="text-xl font-bold text-slate-900 mt-1 mb-3">Administrator Portal</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6">
+                            Complete institutional control: manage student admissions, add &amp; edit departments, assign course credits, configure master timetables, and broadcast official notices.
+                        </p>
+                        <ul class="space-y-2.5 text-xs text-slate-600 mb-8">
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>Student Admissions &amp; SIS Records Lifecycle</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>Department, Course &amp; Credit Configuration</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                <span>Master Timetable Builder &amp; Notice Broadcaster</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a th:href="@{/login}" 
+                       class="w-full text-center py-3 rounded-xl bg-red-50 hover:bg-red-600 text-red-700 hover:text-white font-bold text-xs uppercase tracking-wider transition-colors duration-200">
+                        <span>Enter Admin Portal</span> &rarr;
+                    </a>
+                </div>
 
             </div>
 
         </div>
-
-
-        <!-- 3D MODEL -->
-
-        <div class="hero-image">
-
-            <model-viewer
-                src="/Models/WalkStudent.glb"
-                camera-controls
-                rotation-per-second="10deg"
-                shadow-intensity="1"
-                alt="Student 3D Model">
-            </model-viewer>
-
-        </div>
-
     </section>
 
 
-    <!-- ================= FEATURES ================= -->
+    <!-- ============================================================== -->
+    <!-- 5. COMPREHENSIVE FEATURES GRID                                  -->
+    <!-- ============================================================== -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <section class="Features" id="features">
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                    Core ERP Capabilities
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-3 tracking-tight">
+                    Engineered for Digital Academic Excellence
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
+                    Explore the modular feature set powering RKGIT's next-generation digital campus operations.
+                </p>
+            </div>
 
-        <div class="feature">
+            <!-- Features 6-Card Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-            <img
-                src="/Img%20Assist/attendance.png"
-                alt="Attendance Tracking"
-                class="feature-icon">
+                <!-- Feature 1: Attendance -->
+                <div class="p-7 rounded-3xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-blue-300 shimmer-card">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-100/60 p-2.5 flex items-center justify-center mb-5">
+                        <img src="/Img%20Assist/attendance.png" 
+                             onerror="this.onerror=null; this.src='/Img Assist/attendance.png';"
+                             alt="Attendance Tracking" 
+                             class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Smart Attendance Tracking</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Daily subject-wise lecture logging with automatic percentage computations, 75% threshold shortage warnings, and transparent status histories for both students and faculty.
+                    </p>
+                </div>
 
-            <h2>Attendance Tracking</h2>
+                <!-- Feature 2: Courses -->
+                <div class="p-7 rounded-3xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-blue-300 shimmer-card">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-100/60 p-2.5 flex items-center justify-center mb-5">
+                        <img src="/Img%20Assist/course.png" 
+                             onerror="this.onerror=null; this.src='/Img Assist/course.png';"
+                             alt="Course Management" 
+                             class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Curriculum &amp; Course Management</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Department-aligned course catalogs with credit allocations, semester mappings, syllabus linkages, and designated faculty instructors.
+                    </p>
+                </div>
 
-            <p>
-                Monitor student attendance with ease and accuracy.
-            </p>
+                <!-- Feature 3: Performance -->
+                <div class="p-7 rounded-3xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-blue-300 shimmer-card">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100/60 p-2.5 flex items-center justify-center mb-5">
+                        <img src="/Img%20Assist/performance.png" 
+                             onerror="this.onerror=null; this.src='/Img Assist/performance.png';"
+                             alt="Performance Monitoring" 
+                             class="w-full h-full object-contain">
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Sessional Marks &amp; Progress</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Direct grading for Sessional-I, Sessional-II, Put-Up, and lab assessments by course professors, accompanied by constructive feedback and performance analytics.
+                    </p>
+                </div>
 
-        </div>
+                <!-- Feature 4: Timetable -->
+                <div class="p-7 rounded-3xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-blue-300 shimmer-card">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-100/60 flex items-center justify-center text-purple-600 text-2xl mb-5">
+                        📅
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">Dynamic Weekly Timetable</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Interactive daily schedule viewer showing period time slots (09:00 - 17:00), classroom and laboratory venues, course codes, and instructor details.
+                    </p>
+                </div>
 
+                <!-- Feature 5: Question Papers -->
+                <div class="p-7 rounded-3xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-blue-300 shimmer-card">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-100/60 flex items-center justify-center text-amber-600 text-2xl mb-5">
+                        📚
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">AKTU Digital Question Vault</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Repository of AKTU University previous year question papers, carry-over examination sets, model question banks, and semester reference materials.
+                    </p>
+                </div>
 
-        <div class="feature" id="courses">
-
-            <img
-                src="/Img%20Assist/course.png"
-                alt="Course Management"
-                class="feature-icon">
-
-            <h2>Course Management</h2>
-
-            <p>
-                Organize and manage courses efficiently from one place.
-            </p>
-
-        </div>
-
-
-        <div class="feature">
-
-            <img
-                src="/Img%20Assist/performance.png"
-                alt="Performance Monitoring"
-                class="feature-icon">
-
-            <h2>Performance Monitoring</h2>
-
-            <p>
-                Track student performance and academic progress over time.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= STUDENT MANAGEMENT ================= -->
-
-    <section id="students">
-
-        <div class="table-card">
-
-            <div class="table-header">
-
-                <h2>Student Management</h2>
-
-                <input
-                    type="text"
-                    id="studentSearch"
-                    placeholder="Search students...">
+                <!-- Feature 6: OTP & Security -->
+                <div class="p-7 rounded-3xl bg-slate-50 border border-slate-200/80 hover:bg-white hover:border-blue-300 shimmer-card">
+                    <div class="w-14 h-14 rounded-2xl bg-rose-100/60 flex items-center justify-center text-rose-600 text-2xl mb-5">
+                        🔐
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">6-Digit OTP &amp; RBAC Security</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Strict Role-Based Access Control (RBAC), BCrypt encrypted passwords, 6-digit email OTP verification, and multi-identifier sign-in by username, email, or mobile.
+                    </p>
+                </div>
 
             </div>
 
-
-            <table class="client-table">
-
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Course</th>
-                        <th>Attendance</th>
-                        <th>Performance</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>Student Management</td>
-                        <td>Academic Records</td>
-                        <td>—</td>
-                        <td>—</td>
-                    </tr>
-
-                    <tr>
-                        <td>Course Management</td>
-                        <td>Course Data</td>
-                        <td>—</td>
-                        <td>—</td>
-                    </tr>
-
-                    <tr>
-                        <td>Performance Tracking</td>
-                        <td>Academic Progress</td>
-                        <td>—</td>
-                        <td>—</td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
         </div>
-
     </section>
 
 
-    <!-- ================= JAVASCRIPT ================= -->
+    <!-- ============================================================== -->
+    <!-- 6. RECENT CAMPUS CIRCULARS & NOTICES FEED                       -->
+    <!-- ============================================================== -->
+    <section id="notices" class="py-20 bg-slate-900 text-white relative overflow-hidden">
 
-    <script src="/script.js" defer></script>
+        <!-- Background ambient lighting -->
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full text-xs font-bold uppercase tracking-wider">
+                        Real-Time Updates
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3 tracking-tight">
+                        Official Notices &amp; Circulars
+                    </h2>
+                    <p class="text-sm text-slate-400 mt-2">
+                        Stay informed with real-time academic announcements, examination circulars, and departmental events.
+                    </p>
+                </div>
+                <a th:href="@{/login}" class="mt-4 md:mt-0 inline-flex items-center gap-2 text-xs font-bold text-blue-400 hover:text-blue-300">
+                    <span>View All Circulars in Portal</span> &rarr;
+                </a>
+            </div>
+
+            <!-- Notices Grid / List -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Dynamic Notice Card 1 -->
+                <div class="p-6 rounded-3xl bg-slate-800/80 border border-slate-700/80 hover:border-slate-600 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                Examination
+                            </span>
+                            <span class="text-[11px] text-slate-400 font-mono">Published</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-2 leading-snug">
+                            Sessional-II Examination Schedule Announced
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed line-clamp-3">
+                            The Department of Computer Science &amp; Engineering will conduct Sessional-II examinations starting next Monday. Students must carry their institute ID cards.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+                        <span>Issued by: Dean Academics</span>
+                        <span class="text-blue-400 font-semibold">ALL</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic Notice Card 2 -->
+                <div class="p-6 rounded-3xl bg-slate-800/80 border border-slate-700/80 hover:border-slate-600 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                                Academic
+                            </span>
+                            <span class="text-[11px] text-slate-400 font-mono">Action Required</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-2 leading-snug">
+                            AKTU Examination Form Submission Guidelines
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed line-clamp-3">
+                            All B.Tech students must verify their semester subject electives on the AKTU ERP portal and clear outstanding tuition dues before the 28th of this month.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+                        <span>Issued by: Registrar Office</span>
+                        <span class="text-blue-400 font-semibold">STUDENTS</span>
+                    </div>
+                </div>
+
+                <!-- Dynamic Notice Card 3 -->
+                <div class="p-6 rounded-3xl bg-slate-800/80 border border-slate-700/80 hover:border-slate-600 transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                Hackathon &amp; Event
+                            </span>
+                            <span class="text-[11px] text-slate-400 font-mono">Open Now</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-2 leading-snug">
+                            Hackathon 2026: CampusIQ Smart Solutions
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed line-clamp-3">
+                            Registrations are now open for the annual inter-college hackathon. Top 3 winning teams will be awarded cash prizes and incubation support.
+                        </p>
+                    </div>
+                    <div class="mt-5 pt-4 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+                        <span>Dr. Rajesh Sharma (HOD CSE)</span>
+                        <span class="text-blue-400 font-semibold">STUDENTS</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- 7. FREQUENTLY ASKED QUESTIONS (FAQ)                            -->
+    <!-- ============================================================== -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="text-center mb-12">
+                <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-xs font-bold uppercase tracking-wider">
+                    Assistance &amp; FAQs
+                </span>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-3 tracking-tight">
+                    Frequently Asked Questions
+                </h2>
+                <p class="text-sm text-slate-500 mt-2">
+                    Everything you need to know about accessing and navigating CampusIQ.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+
+                <!-- FAQ 1 -->
+                <div class="rounded-2xl border border-slate-200/80 p-5 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                    <button type="button" onclick="toggleFaq('faq1')" class="w-full text-left flex justify-between items-center font-bold text-sm text-slate-900 cursor-pointer">
+                        <span>How do I sign in if I am a Student or Faculty?</span>
+                        <span id="faq1-icon" class="text-blue-600 font-mono text-lg">+</span>
+                    </button>
+                    <div id="faq1" class="hidden mt-3 text-xs text-slate-600 leading-relaxed pt-2 border-t border-slate-200/60">
+                        Click the "Login" button on the top right. You can enter your Institutional Username, Registered Email, Student Roll Number (e.g. <code class="bg-slate-200 px-1 py-0.5 rounded">2024CSE042</code>), or Faculty Employee Code. Default starter accounts (<code class="bg-slate-200 px-1 py-0.5 rounded">student/student123</code> and <code class="bg-slate-200 px-1 py-0.5 rounded">faculty/faculty123</code>) can also be tested using the one-click quick fill chips.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="rounded-2xl border border-slate-200/80 p-5 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                    <button type="button" onclick="toggleFaq('faq2')" class="w-full text-left flex justify-between items-center font-bold text-sm text-slate-900 cursor-pointer">
+                        <span>How does the 6-Digit Email OTP registration work?</span>
+                        <span id="faq2-icon" class="text-blue-600 font-mono text-lg">+</span>
+                    </button>
+                    <div id="faq2" class="hidden mt-3 text-xs text-slate-600 leading-relaxed pt-2 border-t border-slate-200/60">
+                        When creating a new account via the Register page, choose whether you are a Student, Faculty, or Administrator. CampusIQ immediately delivers a 6-digit one-time password (OTP) to your email. Submitting the OTP verifies your identity and automatically provisions your SIS profile.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="rounded-2xl border border-slate-200/80 p-5 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                    <button type="button" onclick="toggleFaq('faq3')" class="w-full text-left flex justify-between items-center font-bold text-sm text-slate-900 cursor-pointer">
+                        <span>What is the minimum attendance threshold required?</span>
+                        <span id="faq3-icon" class="text-blue-600 font-mono text-lg">+</span>
+                    </button>
+                    <div id="faq3" class="hidden mt-3 text-xs text-slate-600 leading-relaxed pt-2 border-t border-slate-200/60">
+                        As per university guidelines, all students must maintain at least <strong>75% attendance</strong> across each registered subject. The system visually highlights safe attendance in green and flags any shortages in red on both student and faculty dashboards.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="rounded-2xl border border-slate-200/80 p-5 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                    <button type="button" onclick="toggleFaq('faq4')" class="w-full text-left flex justify-between items-center font-bold text-sm text-slate-900 cursor-pointer">
+                        <span>How can an Administrator register with the security passkey?</span>
+                        <span id="faq4-icon" class="text-blue-600 font-mono text-lg">+</span>
+                    </button>
+                    <div id="faq4" class="hidden mt-3 text-xs text-slate-600 leading-relaxed pt-2 border-t border-slate-200/60">
+                        To register an Administrator profile, switch to the "Admin" pill on the register page and provide the institutional passkey (<code class="bg-slate-200 px-1 py-0.5 rounded">ADMIN123</code>). Admin accounts receive full permissions to manage students, courses, notices, and timetables.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- 8. INSTITUTIONAL CALL-TO-ACTION (CTA) BANNER                   -->
+    <!-- ============================================================== -->
+    <section class="py-16 bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                Ready to Experience Seamless Academic Governance?
+            </h2>
+            <p class="text-blue-100 text-sm sm:text-base max-w-2xl mx-auto mt-3 leading-relaxed">
+                Join hundreds of students and faculty members already managing their academic journey with CampusIQ ERP.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+                <a th:href="@{/login}" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-white text-blue-700 hover:bg-blue-50 font-bold text-sm uppercase tracking-wider shadow-lg active:scale-[0.98] transition-all">
+                    Sign In to Portal
+                </a>
+                <a th:href="@{/register}" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-semibold text-sm border border-blue-400/40 transition-all">
+                    Create New Account
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================================== -->
+    <!-- 9. AESTHETIC INSTITUTIONAL FOOTER                              -->
+    <!-- ============================================================== -->
+    <footer id="about" class="bg-slate-950 text-slate-400 pt-16 pb-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
+
+                <!-- Col 1: Brand & Tagline -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center p-2">
+                            <img src="/Img%20Assist/Pagelogo.png" 
+                                 onerror="this.onerror=null; this.src='/Img Assist/Pagelogo.png';"
+                                 alt="CampusIQ Logo" 
+                                 class="w-full h-full object-contain">
+                        </div>
+                        <div>
+                            <span class="text-xl font-extrabold text-white tracking-tight">CampusIQ</span>
+                            <span class="block text-[11px] text-slate-500">Student Management System</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Enterprise academic resource planning platform built for RKGIT Group of Institutions. Empowering digital governance, academic tracking, and institutional transparency.
+                    </p>
+                    <div class="text-xs text-slate-500">
+                        Affiliated to Dr. A.P.J. Abdul Kalam Technical University (AKTU) • AICTE Approved
+                    </div>
+                </div>
+
+                <!-- Col 2: Direct Portals -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Direct Portals</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a th:href="@{/login}" class="hover:text-blue-400 transition-colors">Student SIS Portal</a></li>
+                        <li><a th:href="@{/login}" class="hover:text-blue-400 transition-colors">Faculty Operations Console</a></li>
+                        <li><a th:href="@{/login}" class="hover:text-blue-400 transition-colors">Admin Governance Desk</a></li>
+                        <li><a th:href="@{/register}" class="hover:text-blue-400 transition-colors">Create Institutional Account</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Academic Resources -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Academics</h4>
+                    <ul class="space-y-2.5 text-xs">
+                        <li><a href="#features" class="hover:text-blue-400 transition-colors">Smart Attendance</a></li>
+                        <li><a href="#features" class="hover:text-blue-400 transition-colors">Sessional Evaluations</a></li>
+                        <li><a href="#features" class="hover:text-blue-400 transition-colors">AKTU Question Papers</a></li>
+                        <li><a href="#features" class="hover:text-blue-400 transition-colors">Dynamic Weekly Timetable</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Campus Contact -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Campus Location</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-3">
+                        RKGIT Campus, 56.5 Km Stone, Delhi-Meerut Road, Ghaziabad, Uttar Pradesh 201206
+                    </p>
+                    <p class="text-xs text-slate-500">
+                        Support: <a href="mailto:support@rkgit.edu.in" class="text-blue-400 hover:underline">support@rkgit.edu.in</a>
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <div>
+                    &copy; 2026 CampusIQ • RKGIT Group of Institutions. All rights reserved.
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="#hero" class="hover:text-slate-400 transition-colors">Back to Top &uarr;</a>
+                    <a th:href="@{/login}" class="hover:text-slate-400 transition-colors">Login</a>
+                    <a th:href="@{/register}" class="hover:text-slate-400 transition-colors">Register</a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <!-- ============================================================== -->
+    <!-- 10. LIGHTWEIGHT VANILLA JAVASCRIPT INTERACTIONS                -->
+    <!-- ============================================================== -->
+    <script>
+        // 1. Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // 2. FAQ Accordion Toggle
+        function toggleFaq(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.textContent = '−';
+            } else {
+                el.classList.add('hidden');
+                icon.textContent = '+';
+            }
+        }
+    </script>
 
 </body>
-
 </html>

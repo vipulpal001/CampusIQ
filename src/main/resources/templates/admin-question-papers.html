@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage University Papers - RKGIT ERP</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1d68ed',
+                            hover: '#1557d0',
+                            dark: '#0a0f1d'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/Img%20Assist/favicon.ico">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+
+<body class="bg-slate-100 min-h-screen text-slate-800 antialiased flex flex-col">
+
+    <!-- Top Navbar -->
+    <header class="sticky top-0 z-40 bg-white border-b border-slate-200/90 shadow-sm h-16 flex items-center justify-between px-4 sm:px-6">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-red-50 border border-red-200 flex items-center justify-center p-1.5 shadow-sm">
+                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-xl font-extrabold tracking-tight text-slate-900">RKGIT</span>
+                <span class="text-[11px] font-bold text-red-700 bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    Admin Portal
+                </span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-red-600 text-white font-bold flex items-center justify-center text-xs shadow-sm ring-2 ring-red-100">
+                AD
+            </div>
+            <div class="text-left hidden sm:block">
+                <div class="text-xs font-bold text-slate-900">SYSTEM ADMINISTRATOR</div>
+                <div class="text-[10px] text-slate-500">Super User • RKGIT ERP</div>
+            </div>
+            <a th:href="@{/login?logout}" class="p-2 text-slate-400 hover:text-red-600 transition-colors ml-1" title="Logout">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+            </a>
+        </div>
+    </header>
+
+    <!-- Wrapper -->
+    <div class="flex flex-1 overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white border-r border-slate-200 p-4 flex flex-col justify-between shrink-0 hidden lg:flex">
+            <nav class="space-y-1 text-sm font-medium">
+                <a th:href="@{/admin/dashboard}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+                    <span>System Dashboard</span>
+                </a>
+
+                <a th:href="@{/students}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <span>Manage Students</span>
+                </a>
+
+                <a th:href="@{/admin/faculty}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                    <span>Manage Faculty</span>
+                </a>
+
+                <a th:href="@{/admin/courses}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                    <span>Subjects & Curricula</span>
+                </a>
+
+                <a th:href="@{/admin/timetable}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>Manage Time-Table</span>
+                </a>
+
+                <a th:href="@{/admin/question-papers}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-red-50 text-red-600 font-semibold border-r-4 border-red-600">
+                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <span>University Papers</span>
+                </a>
+
+                <a th:href="@{/attendance}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-600 hover:text-red-600 hover:bg-slate-50 transition-colors">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                    <span>Institutional Attendance</span>
+                </a>
+            </nav>
+
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs">
+                <span class="font-bold text-slate-700">RKGIT ERP v2.4</span>
+                <p class="text-slate-500 mt-1">Status: All services online</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 lg:p-8 overflow-y-auto bg-slate-50">
+
+            <div th:if="${successMessage}" class="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-sm flex items-center gap-2">
+                <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                <span th:text="${successMessage}"></span>
+            </div>
+            <div th:if="${errorMessage}" class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-800 text-sm flex items-center gap-2">
+                <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- Page Header / Breadcrumb -->
+            <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-xs text-slate-500 mb-1">
+                        <a th:href="@{/admin/dashboard}" class="hover:text-red-600 transition-colors">Admin Dashboard</a>
+                        <span>/</span>
+                        <span class="text-slate-800 font-medium">Question Papers</span>
+                    </div>
+                    <h1 class="text-2xl font-bold tracking-tight text-slate-900">University Examination Archive</h1>
+                    <p class="text-xs text-slate-500 mt-0.5">Archive past examination question papers and make previous years' papers accessible.</p>
+                </div>
+            </div>
+
+            <!-- Add Question Paper Card -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs mb-8">
+                <h2 class="text-base font-bold text-slate-900 mb-1">Publish University Question Paper</h2>
+                <p class="text-xs text-slate-500 mb-4">Upload and make previous years' university examination papers accessible to students</p>
+
+                <form th:action="@{/admin/question-papers/new}" method="post" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Course Code</label>
+                        <input type="text" name="courseCode" required placeholder="e.g. CS101"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Subject Name</label>
+                        <input type="text" name="subjectName" required placeholder="e.g. Data Structures & Algorithms"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">University Paper Code</label>
+                        <input type="text" name="paperCode" required placeholder="e.g. KCS-301"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500">
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Semester & Exam Year</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="number" name="semester" min="1" max="8" value="3" class="bg-slate-50 border border-slate-200 rounded-xl px-2 py-2 text-center text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500" title="Semester">
+                            <input type="number" name="examYear" min="2018" max="2026" value="2024" class="bg-slate-50 border border-slate-200 rounded-xl px-2 py-2 text-center text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500" title="Year">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Exam Type</label>
+                        <select name="examType" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500">
+                            <option value="End Semester Examination">End Semester Examination</option>
+                            <option value="Carry Over Examination">Carry Over Examination</option>
+                            <option value="Mid-Term Sessional">Mid-Term Sessional</option>
+                        </select>
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label class="block font-semibold text-slate-700 mb-1">PDF Download Link</label>
+                        <input type="text" name="downloadUrl" value="https://aktu.ac.in" placeholder="Link to PDF document"
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500">
+                    </div>
+
+                    <div class="flex items-end">
+                        <button type="submit" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-xs transition-colors uppercase tracking-wider text-xs cursor-pointer">
+                            + Publish Paper
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Papers Archive Table -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-base font-bold text-slate-900">University Question Papers Directory</h2>
+                    <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full" th:text="${#lists.size(papers)} + ' Papers Archived'"></span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-50 border-b border-slate-100 uppercase text-slate-500 font-semibold tracking-wider">
+                            <tr>
+                                <th class="py-3 px-4">Subject</th>
+                                <th class="py-3 px-4">Paper Code</th>
+                                <th class="py-3 px-4 text-center">Semester</th>
+                                <th class="py-3 px-4 text-center">Year</th>
+                                <th class="py-3 px-4">Exam Type</th>
+                                <th class="py-3 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr th:each="p : ${papers}" class="hover:bg-slate-50/75 transition-colors">
+                                <td class="py-3 px-4">
+                                    <div class="font-bold text-slate-900" th:text="${p.subjectName}"></div>
+                                    <div class="text-[11px] font-mono text-red-600 font-semibold" th:text="${p.courseCode}"></div>
+                                </td>
+                                <td class="py-3 px-4 font-mono font-bold text-slate-700" th:text="${p.paperCode}"></td>
+                                <td class="py-3 px-4 text-center" th:text="'Sem ' + ${p.semester}"></td>
+                                <td class="py-3 px-4 text-center font-bold text-slate-800" th:text="${p.examYear}"></td>
+                                <td class="py-3 px-4">
+                                    <span class="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md font-semibold text-[11px]" th:text="${p.examType}"></span>
+                                </td>
+                                <td class="py-3 px-4 text-right">
+                                    <form th:action="@{'/admin/question-papers/delete/' + ${p.id}}" method="post" class="inline">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                        <button type="submit" onclick="return confirm('Delete this question paper?')"
+                                                class="text-red-600 hover:text-red-800 font-semibold cursor-pointer">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>

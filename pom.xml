@@ -6,6 +6,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- ======================================================= -->
+    <!-- [CAMPUSIQ ERP]: Spring Boot Parent 4.1.0 (from local cache) -->
+    <!-- ======================================================= -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -61,12 +64,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-         <!-- PostgreSQL / Supabase -->
-         <dependency>
-             <groupId>org.postgresql</groupId>
-             <artifactId>postgresql</artifactId>
-             <scope>runtime</scope>
-         </dependency>
+
+        <!-- MySQL -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
         <!-- DevTools -->
         <dependency>

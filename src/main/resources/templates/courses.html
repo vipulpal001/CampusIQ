@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Catalog - CampusIQ</title>
+    <!-- ================================================================= -->
+    <!-- [CAMPUSIQ ERP VIEW]: Academic Course Catalog                      -->
+    <!-- Allows viewing and creating courses with department mapping       -->
+    <!-- ================================================================= -->
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <style>
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+        @media (max-width: 900px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card-panel {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+        .form-control {
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .btn-submit {
+            background: #2563eb;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover {
+            background: #1d4ed8;
+        }
+        .badge-dept {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .badge-credits {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .alert-box {
+            padding: 14px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .alert-success {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+        .alert-error {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+        .action-link-delete {
+            color: #ef4444;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .action-link-delete:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">
+        <a th:href="@{/dashboard}" style="text-decoration: none; color: inherit;">CampusIQ</a>
+    </div>
+
+    <div class="nav-links">
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/students}">Students</a>
+        <a th:href="@{/courses}" style="color: #2563eb; font-weight: bold;">Courses</a>
+        <a th:href="@{/attendance}">Attendance</a>
+        <a th:href="@{/dashboard#about}">About</a>
+    </div>
+
+    <div class="profile" style="display: flex; align-items: center; gap: 15px;">
+        <span>Admin</span>
+        <a th:href="@{/login?logout}" style="color: #ef4444; text-decoration: none; font-size: 14px; font-weight: bold;">Logout 🚪</a>
+    </div>
+</nav>
+
+<main class="container" style="margin-top: 100px; padding: 30px 5%;">
+
+    <!-- Alerts -->
+    <div th:if="${successMessage}" class="alert-box alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert-box alert-error" th:text="${errorMessage}"></div>
+
+    <div class="page-header">
+        <div>
+            <h1 style="font-size: 28px; font-weight: 700; color: #0f172a;">Academic Course Catalog</h1>
+            <p style="color: #64748b; margin-top: 5px;">Configure course curricula, credit structures, and department allocations.</p>
+        </div>
+    </div>
+
+    <div class="grid-layout">
+
+        <!-- Add Course Card -->
+        <div class="card-panel">
+            <h2 style="font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 16px;">Add New Course</h2>
+
+            <form th:action="@{/courses/save}" th:object="${newCourse}" method="post">
+            
+
+                <div class="form-group">
+                    <label for="courseCode">Course Code *</label>
+                    <input type="text" id="courseCode" th:field="*{courseCode}" class="form-control" placeholder="e.g. CS302" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Course Title *</label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="e.g. Operating Systems" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department *</label>
+                    <select id="department" th:field="*{department}" class="form-control" required>
+                        <option value="" disabled selected>Select Department</option>
+                        <option th:each="dept : ${departments}"
+                                th:value="${dept.id}"
+                                th:text="${dept.code} + ' - ' + ${dept.name}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="semester">Semester *</label>
+                    <select id="semester" th:field="*{semester}" class="form-control" required>
+                        <option th:each="i : ${#numbers.sequence(1, 8)}"
+                                th:value="${i}"
+                                th:text="'Semester ' + ${i}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="credits">Credits *</label>
+                    <input type="number" id="credits" th:field="*{credits}" class="form-control" min="1" max="10" value="4" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Save Course</button>
+            </form>
+        </div>
+
+        <!-- Course List Table -->
+        <div class="students" style="width: 100%;">
+            <div class="students-header">
+                <h2>
+                    Available Courses
+                    <span style="font-size: 14px; color: #64748b; font-weight: normal;" th:text="'(' + ${#lists.size(courses)} + ' total)'"></span>
+                </h2>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Course Name</th>
+                    <th>Department</th>
+                    <th>Semester</th>
+                    <th>Credits</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(courses)}">
+                    <td colspan="6" style="text-align:center; padding: 40px; color: #64748b;">
+                        No courses registered yet. Use the form on the left to add your first course.
+                    </td>
+                </tr>
+                <tr th:each="course : ${courses}">
+                    <td><strong th:text="${course.courseCode}">CS101</strong></td>
+                    <td th:text="${course.name}">Data Structures</td>
+                    <td>
+                        <span class="badge-dept" th:text="${course.department != null ? course.department.code : 'General'}">CSE</span>
+                    </td>
+                    <td th:text="'Sem ' + ${course.semester}">Sem 3</td>
+                    <td>
+                        <span class="badge-credits" th:text="${course.credits} + ' Credits'">4 Credits</span>
+                    </td>
+                    <td>
+                        <a th:href="@{'/courses/delete/' + ${course.id}}"
+                           class="action-link-delete"
+                           onclick="return confirm('Are you sure you want to remove this course?');">
+                            Remove
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    <p>© 2026 CampusIQ | Enterprise College ERP System</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+package com.campusiq.campusiq.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.campusiq.campusiq.model.Notice;
+
+@Repository
+public interface NoticeRepository extends JpaRepository<Notice, Long> {
+
+    List<Notice> findAllByOrderByCreatedAtDesc();
+
+    List<Notice> findByTargetRoleInOrderByCreatedAtDesc(List<String> roles);
+
+    List<Notice> findTop5ByOrderByCreatedAtDesc();
+}
